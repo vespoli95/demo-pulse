@@ -16,11 +16,13 @@ export default function PollsPage() {
       name: 'Canada',
       pageTitle: 'Opinion polling for the 2025 Canadian federal election',
       flagCode: 'CA',
+      electionYear: 2025
     },
     {
       name: 'Ireland',
       pageTitle: 'Next Irish general election',
       flagCode: 'IE',
+      electionYear: 2024
     },
   ];
 
@@ -36,7 +38,8 @@ export default function PollsPage() {
           <CountryPolling 
             key={country.name} 
             country={country.name} 
-            pageTitle={country.pageTitle} 
+            pageTitle={country.pageTitle}
+            electionYear={country.electionYear}
           />
         ))}
       </div>

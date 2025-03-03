@@ -17,6 +17,7 @@ function getCountryCode(country: string): string {
 interface CountryPollingProps {
   country: string;
   pageTitle: string;
+  electionYear: number;
 }
 
 // Sample data - in a real app, this would be parsed from Wikipedia
@@ -69,7 +70,7 @@ const sampleData = {
   },
 };
 
-export function CountryPolling({ country, pageTitle }: CountryPollingProps) {
+export function CountryPolling({ country, pageTitle, electionYear }: CountryPollingProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [content, setContent] = useState<string | null>(null);
@@ -110,11 +111,11 @@ export function CountryPolling({ country, pageTitle }: CountryPollingProps) {
           alt={`${country} flag`}
           className="mr-2"
         />
-        {country} Federal Election Polling
+        {country} Federal Election Polling ({electionYear})
       </h2>
       <div className="bg-white p-4 rounded-lg shadow-lg">
         <PollChart 
-          title={`${country} Federal Election Polling`} 
+          title={`${country} Federal Election Polling (${electionYear})`} 
           labels={data.labels} 
           datasets={data.datasets}
           countryCode={getCountryCode(country)}
