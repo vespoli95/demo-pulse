@@ -31,6 +31,7 @@ interface PollChartProps {
     borderColor: string;
     backgroundColor: string;
   }>;
+  countryCode?: string;
 }
 
 export function PollChart({ title, labels, datasets }: PollChartProps) {

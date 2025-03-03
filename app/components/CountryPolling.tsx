@@ -3,6 +3,17 @@ import { useState, useEffect } from 'react';
 import { fetchWikipediaContent } from '../services/wikipediaService';
 import { PollChart } from './PollChart';
 
+// Function to get country codes for flag API
+function getCountryCode(country: string): string {
+  const countryCodes: Record<string, string> = {
+    'Canada': 'CA',
+    'Ireland': 'IE',
+    // Add more countries as needed
+  };
+  
+  return countryCodes[country] || 'UN'; // Default to UN flag if country not found
+}
+
 interface CountryPollingProps {
   country: string;
   pageTitle: string;
@@ -93,12 +104,20 @@ export function CountryPolling({ country, pageTitle }: CountryPollingProps) {
 
   return (
     <div className="my-8">
-      <h2 className="text-2xl font-bold mb-4">{country} Federal Election Polling</h2>
+      <h2 className="text-2xl font-bold mb-4 flex items-center">
+        <img 
+          src={`https://flagsapi.com/${getCountryCode(country)}/flat/32.png`} 
+          alt={`${country} flag`}
+          className="mr-2"
+        />
+        {country} Federal Election Polling
+      </h2>
       <div className="bg-white p-4 rounded-lg shadow-lg">
         <PollChart 
           title={`${country} Federal Election Polling`} 
           labels={data.labels} 
-          datasets={data.datasets} 
+          datasets={data.datasets}
+          countryCode={getCountryCode(country)}
         />
       </div>
       {content && (

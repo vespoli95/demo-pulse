@@ -15,10 +15,12 @@ export default function PollsPage() {
     {
       name: 'Canada',
       pageTitle: 'Opinion polling for the 2025 Canadian federal election',
+      flagCode: 'CA',
     },
     {
       name: 'Ireland',
       pageTitle: 'Next Irish general election',
+      flagCode: 'IE',
     },
   ];
 
