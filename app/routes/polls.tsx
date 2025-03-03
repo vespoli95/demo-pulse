@@ -61,7 +61,7 @@ export default function PollsPage() {
         This page displays polling data for upcoming federal elections around the world.
       </p>
       
-      <div className="grid grid-cols-1 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {upcomingElections.map((country) => (
           <CountryPolling 
             key={country.name} 
