@@ -23,46 +23,46 @@ interface CountryPollingProps {
 // Sample data - in a real app, this would be parsed from Wikipedia
 const sampleData = {
   'Canada': {
-    labels: ['Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024'],
+    labels: ['Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024', 'Jul 2024', 'Aug 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025'],
     datasets: [
       {
         label: 'Liberal Party',
-        data: [32, 30, 29, 28, 27, 26],
+        data: [32, 30, 29, 28, 27, 26, 25, 24, 23, 24, 25, 26, 27, 28],
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
       {
         label: 'Conservative Party',
-        data: [33, 34, 35, 36, 37, 39],
+        data: [33, 34, 35, 36, 37, 39, 40, 41, 40, 39, 38, 37, 36, 35],
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
       {
         label: 'NDP',
-        data: [20, 20, 19, 19, 18, 18],
+        data: [20, 20, 19, 19, 18, 18, 19, 20, 21, 22, 21, 20, 20, 21],
         borderColor: 'rgb(255, 159, 64)',
         backgroundColor: 'rgba(255, 159, 64, 0.5)',
       },
     ],
   },
   'Ireland': {
-    labels: ['Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024'],
+    labels: ['Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024', 'Jul 2024', 'Aug 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025'],
     datasets: [
       {
         label: 'Fine Gael',
-        data: [25, 24, 23, 22, 21, 20],
+        data: [25, 24, 23, 22, 21, 20, 21, 22, 23, 24, 25, 26, 25, 24],
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
       {
         label: 'Fianna Fáil',
-        data: [18, 19, 20, 21, 22, 23],
+        data: [18, 19, 20, 21, 22, 23, 24, 25, 24, 23, 22, 21, 20, 19],
         borderColor: 'rgb(75, 192, 192)',
         backgroundColor: 'rgba(75, 192, 192, 0.5)',
       },
       {
         label: 'Sinn Féin',
-        data: [30, 29, 28, 27, 26, 25],
+        data: [30, 29, 28, 27, 26, 25, 24, 23, 24, 25, 26, 27, 28, 29],
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
