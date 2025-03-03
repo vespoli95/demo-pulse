@@ -32,9 +32,10 @@ interface PollChartProps {
     backgroundColor: string;
   }>;
   countryCode?: string;
+  wikipediaPage?: string;
 }
 
-export function PollChart({ title, labels, datasets }: PollChartProps) {
+export function PollChart({ title, labels, datasets, wikipediaPage }: PollChartProps) {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -88,5 +89,26 @@ export function PollChart({ title, labels, datasets }: PollChartProps) {
     datasets,
   };
 
-  return <div className="w-full h-[500px]"><Line options={options} data={data} /></div>;
+  return (
+    <div className="flex flex-col">
+      <div className="w-full h-[500px]">
+        <Line options={options} data={data} />
+      </div>
+      {wikipediaPage && (
+        <div className="mt-2 text-right">
+          <a 
+            href={`https://en.wikipedia.org/wiki/${wikipediaPage.replace(/ /g, '_')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 text-sm hover:underline flex items-center justify-end"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            View data on Wikipedia
+          </a>
+        </div>
+      )}
+    </div>
+  );
 }

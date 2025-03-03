@@ -469,6 +469,7 @@ export function CountryPolling({ country, pageTitle, electionYear }: CountryPoll
           labels={data.labels} 
           datasets={data.datasets}
           countryCode={getCountryCode(country)}
+          wikipediaPage={pageTitle}
         />
       </div>
       {content && (
