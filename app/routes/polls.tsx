@@ -5,7 +5,7 @@ import type { Route } from "./+types/polls";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Federal Election Polling Data" },
+    { title: "Federal Election Polling Data (2025)" },
     { name: "description", content: "Polling data for federal elections around the world" },
   ];
 }
@@ -22,13 +22,13 @@ export default function PollsPage() {
       name: 'Ireland',
       pageTitle: 'Next Irish general election',
       flagCode: 'IE',
-      electionYear: 2024
+      electionYear: 2025
     },
   ];
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center my-6">Federal Election Polling Data</h1>
+      <h1 className="text-3xl font-bold text-center my-6">Federal Election Polling Data (2025)</h1>
       <p className="text-center text-gray-600 mb-8">
         This page displays polling data for upcoming federal elections around the world.
       </p>
