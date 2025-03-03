@@ -1,0 +1,120 @@
+
+import React, { useEffect, useState } from 'react';
+import { fetchWikipediaContent } from '../services/wikipediaService';
+import { PollChart } from './PollChart';
+
+interface CountryPollingProps {
+  country: string;
+  pageTitle: string;
+}
+
+// Sample data - in a real app, this would be parsed from Wikipedia
+const sampleData = {
+  'Canada': {
+    labels: ['Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024'],
+    datasets: [
+      {
+        label: 'Liberal Party',
+        data: [32, 30, 29, 28, 27, 26],
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: 'Conservative Party',
+        data: [33, 34, 35, 36, 37, 39],
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+      {
+        label: 'NDP',
+        data: [20, 20, 19, 19, 18, 18],
+        borderColor: 'rgb(255, 159, 64)',
+        backgroundColor: 'rgba(255, 159, 64, 0.5)',
+      },
+    ],
+  },
+  'Ireland': {
+    labels: ['Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024'],
+    datasets: [
+      {
+        label: 'Fine Gael',
+        data: [25, 24, 23, 22, 21, 20],
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+      {
+        label: 'Fianna Fáil',
+        data: [18, 19, 20, 21, 22, 23],
+        borderColor: 'rgb(75, 192, 192)',
+        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+      },
+      {
+        label: 'Sinn Féin',
+        data: [30, 29, 28, 27, 26, 25],
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  },
+};
+
+export function CountryPolling({ country, pageTitle }: CountryPollingProps) {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [content, setContent] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const page = await fetchWikipediaContent(pageTitle);
+        setContent(page.extract);
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to fetch polling data');
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [pageTitle]);
+
+  if (loading) {
+    return <div className="text-center my-8">Loading polling data...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center my-8">{error}</div>;
+  }
+
+  // In a real app, we would parse the content to extract actual polling data
+  // For this example, we're using sample data
+  const data = sampleData[country as keyof typeof sampleData];
+
+  return (
+    <div className="my-8">
+      <h2 className="text-2xl font-bold mb-4">{country} Federal Election Polling</h2>
+      <div className="bg-white p-4 rounded-lg shadow-lg">
+        <PollChart 
+          title={`${country} Federal Election Polling`} 
+          labels={data.labels} 
+          datasets={data.datasets} 
+        />
+      </div>
+      {content && (
+        <div className="mt-4 text-sm">
+          <h3 className="font-bold">Source Information:</h3>
+          <p className="mt-2">{content.substring(0, 300)}...</p>
+          <a 
+            href={`https://en.wikipedia.org/wiki/${pageTitle.replace(/ /g, '_')}`} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            Read more on Wikipedia
+          </a>
+        </div>
+      )}
+    </div>
+  );
+}
