@@ -460,15 +460,8 @@ export function CountryPolling({ country, pageTitle, electionYear }: CountryPoll
               >
                 <div className="flex-1">
                   <div className="font-medium">{party.label}</div>
-                  <div className="flex justify-between">
-                    <div>
-                      <span className="text-xs text-gray-500">Latest:</span>
-                      <span className="text-lg font-bold ml-1">{party.latest}%</span>
-                    </div>
-                    <div>
-                      <span className="text-xs text-gray-500">Avg:</span>
-                      <span className="text-sm font-medium ml-1">{party.average}%</span>
-                    </div>
+                  <div>
+                    <span className="text-lg font-bold">{party.latest}%</span>
                   </div>
                 </div>
               </div>
