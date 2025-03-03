@@ -50,15 +50,19 @@ export default function PollsPage() {
     }
   ];
 
+  // Filter out elections that have already happened
+  const currentYear = new Date().getFullYear();
+  const upcomingElections = countries.filter(country => country.electionYear >= currentYear);
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center my-6">Federal Election Polling Data (2025)</h1>
+      <h1 className="text-3xl font-bold text-center my-6">Upcoming Federal Election Polling Data</h1>
       <p className="text-center text-gray-600 mb-8">
         This page displays polling data for upcoming federal elections around the world.
       </p>
       
       <div className="grid grid-cols-1 gap-8">
-        {countries.map((country) => (
+        {upcomingElections.map((country) => (
           <CountryPolling 
             key={country.name} 
             country={country.name} 
@@ -67,6 +71,12 @@ export default function PollsPage() {
           />
         ))}
       </div>
+      
+      {upcomingElections.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-xl text-gray-600">No upcoming elections found.</p>
+        </div>
+      )}
       
       <footer className="mt-12 text-center text-sm text-gray-500">
         <p>Data sourced from Wikipedia. Last updated: {new Date().toLocaleDateString()}</p>
