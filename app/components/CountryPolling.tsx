@@ -236,7 +236,7 @@ export function CountryPolling({ country, pageTitle, electionYear }: CountryPoll
   // Sort by average value (descending)
   averages.sort((a, b) => b.average - a.average);
   
-  const data = rawData];
+  const data = rawData;
 
   return (
     <div className="my-8">
