@@ -421,18 +421,20 @@ export function CountryPolling({ country, pageTitle, electionYear }: CountryPoll
   // For this example, we're using sample data
   const rawData = sampleData[country as keyof typeof sampleData];
   
-  // Calculate the averages for each party
-  const averages = rawData.datasets.map(dataset => {
+  // Calculate the averages and get latest data point for each party
+  const partySummary = rawData.datasets.map(dataset => {
     const sum = dataset.data.reduce((acc, value) => acc + value, 0);
     const average = (sum / dataset.data.length).toFixed(1);
+    const latest = dataset.data[dataset.data.length - 1].toFixed(1);
     return {
       ...dataset,
-      average: parseFloat(average)
+      average: parseFloat(average),
+      latest: parseFloat(latest)
     };
   });
   
-  // Sort by average value (descending)
-  averages.sort((a, b) => b.average - a.average);
+  // Sort by latest value (descending)
+  partySummary.sort((a, b) => b.latest - a.latest);
   
   const data = rawData;
 
@@ -448,9 +450,9 @@ export function CountryPolling({ country, pageTitle, electionYear }: CountryPoll
       </h2>
       <div className="bg-white p-4 rounded-lg shadow-lg">
         <div className="mb-4">
-          <h3 className="text-lg font-semibold mb-2">Polling Average</h3>
+          <h3 className="text-lg font-semibold mb-2">Polling Summary</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-            {averages.map((party) => (
+            {partySummary.map((party) => (
               <div 
                 key={party.label} 
                 className="flex items-center bg-gray-50 p-2 rounded border"
@@ -458,7 +460,16 @@ export function CountryPolling({ country, pageTitle, electionYear }: CountryPoll
               >
                 <div className="flex-1">
                   <div className="font-medium">{party.label}</div>
-                  <div className="text-lg font-bold">{party.average}%</div>
+                  <div className="flex justify-between">
+                    <div>
+                      <span className="text-xs text-gray-500">Latest:</span>
+                      <span className="text-lg font-bold ml-1">{party.latest}%</span>
+                    </div>
+                    <div>
+                      <span className="text-xs text-gray-500">Avg:</span>
+                      <span className="text-sm font-medium ml-1">{party.average}%</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
