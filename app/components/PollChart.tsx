@@ -44,7 +44,7 @@ export function PollChart({ title, labels, datasets }: PollChartProps) {
       },
       title: {
         display: true,
-        text: title,
+        text: title + " (All Data Points with Averages)",
       },
     },
   };

@@ -221,7 +221,22 @@ export function CountryPolling({ country, pageTitle, electionYear }: CountryPoll
 
   // In a real app, we would parse the content to extract actual polling data
   // For this example, we're using sample data
-  const data = sampleData[country as keyof typeof sampleData];
+  const rawData = sampleData[country as keyof typeof sampleData];
+  
+  // Calculate the averages for each party
+  const averages = rawData.datasets.map(dataset => {
+    const sum = dataset.data.reduce((acc, value) => acc + value, 0);
+    const average = (sum / dataset.data.length).toFixed(1);
+    return {
+      ...dataset,
+      average: parseFloat(average)
+    };
+  });
+  
+  // Sort by average value (descending)
+  averages.sort((a, b) => b.average - a.average);
+  
+  const data = rawData];
 
   return (
     <div className="my-8">
@@ -234,6 +249,23 @@ export function CountryPolling({ country, pageTitle, electionYear }: CountryPoll
         {country} Federal Election Polling ({electionYear})
       </h2>
       <div className="bg-white p-4 rounded-lg shadow-lg">
+        <div className="mb-4">
+          <h3 className="text-lg font-semibold mb-2">Polling Average</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {averages.map((party) => (
+              <div 
+                key={party.label} 
+                className="flex items-center bg-gray-50 p-2 rounded border"
+                style={{ borderLeftColor: party.borderColor, borderLeftWidth: '4px' }}
+              >
+                <div className="flex-1">
+                  <div className="font-medium">{party.label}</div>
+                  <div className="text-lg font-bold">{party.average}%</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
         <PollChart 
           title={`${country} Federal Election Polling (${electionYear})`} 
           labels={data.labels} 
