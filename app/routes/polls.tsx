@@ -16,37 +16,43 @@ export default function PollsPage() {
       name: 'Canada',
       pageTitle: 'Opinion polling for the 2025 Canadian federal election',
       flagCode: 'CA',
-      electionYear: 2025
+      electionYear: 2025,
+      electionMonth: 'October'
     },
     {
       name: 'Ireland',
       pageTitle: 'Next Irish general election',
       flagCode: 'IE',
-      electionYear: 2025
+      electionYear: 2025,
+      electionMonth: 'February'
     },
     {
       name: 'Australia',
       pageTitle: 'Next Australian federal election',
       flagCode: 'AU',
-      electionYear: 2025
+      electionYear: 2025,
+      electionMonth: 'May'
     },
     {
       name: 'Germany',
       pageTitle: 'Next German federal election',
       flagCode: 'DE',
-      electionYear: 2025
+      electionYear: 2025,
+      electionMonth: 'September'
     },
     {
       name: 'New Zealand',
       pageTitle: 'Next New Zealand general election',
       flagCode: 'NZ',
-      electionYear: 2026
+      electionYear: 2026,
+      electionMonth: 'November'
     },
     {
       name: 'France',
       pageTitle: 'Next French legislative election',
       flagCode: 'FR',
-      electionYear: 2027
+      electionYear: 2027,
+      electionMonth: 'June'
     }
   ];
 
@@ -68,6 +74,7 @@ export default function PollsPage() {
             country={country.name} 
             pageTitle={country.pageTitle}
             electionYear={country.electionYear}
+            electionMonth={country.electionMonth}
           />
         ))}
       </div>

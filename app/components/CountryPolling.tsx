@@ -22,6 +22,7 @@ interface CountryPollingProps {
   country: string;
   pageTitle: string;
   electionYear: number;
+  electionMonth: string;
 }
 
 // Sample data - in a real app, this would be parsed from Wikipedia
@@ -388,7 +389,7 @@ const sampleData = {
   },
 };
 
-export function CountryPolling({ country, pageTitle, electionYear }: CountryPollingProps) {
+export function CountryPolling({ country, pageTitle, electionYear, electionMonth }: CountryPollingProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [content, setContent] = useState<string | null>(null);
@@ -446,7 +447,7 @@ export function CountryPolling({ country, pageTitle, electionYear }: CountryPoll
           alt={`${country} flag`}
           className="mr-2"
         />
-        {country} Federal Election Polling ({electionYear})
+        {country} Federal Election Polling ({electionMonth} {electionYear})
       </h2>
       <div className="bg-white p-4 rounded-lg shadow-lg">
         <div className="mb-4">
@@ -469,7 +470,7 @@ export function CountryPolling({ country, pageTitle, electionYear }: CountryPoll
           </div>
         </div>
         <PollChart 
-          title={`${country} Federal Election Polling (${electionYear})`} 
+          title={`${country} Federal Election Polling (${electionMonth} ${electionYear})`} 
           labels={data.labels} 
           datasets={data.datasets}
           countryCode={getCountryCode(country)}
