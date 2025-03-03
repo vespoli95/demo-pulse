@@ -8,6 +8,10 @@ function getCountryCode(country: string): string {
   const countryCodes: Record<string, string> = {
     'Canada': 'CA',
     'Ireland': 'IE',
+    'Australia': 'AU',
+    'Germany': 'DE',
+    'New Zealand': 'NZ',
+    'France': 'FR',
     // Add more countries as needed
   };
   
@@ -65,6 +69,122 @@ const sampleData = {
         data: [30, 29, 28, 27, 26, 25, 24, 23, 24, 25, 26, 27, 28, 29],
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  },
+  'Australia': {
+    labels: ['Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024', 'Jul 2024', 'Aug 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025'],
+    datasets: [
+      {
+        label: 'Labor Party',
+        data: [34, 33, 32, 33, 34, 35, 36, 35, 34, 33, 32, 33, 34, 35],
+        borderColor: 'rgb(255, 0, 0)',
+        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+      },
+      {
+        label: 'Liberal-National Coalition',
+        data: [36, 37, 38, 37, 36, 35, 34, 35, 36, 37, 38, 37, 36, 35],
+        borderColor: 'rgb(0, 0, 255)',
+        backgroundColor: 'rgba(0, 0, 255, 0.5)',
+      },
+      {
+        label: 'Greens',
+        data: [12, 13, 14, 13, 12, 11, 12, 13, 14, 13, 12, 11, 12, 13],
+        borderColor: 'rgb(0, 128, 0)',
+        backgroundColor: 'rgba(0, 128, 0, 0.5)',
+      },
+    ],
+  },
+  'Germany': {
+    labels: ['Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024', 'Jul 2024', 'Aug 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025'],
+    datasets: [
+      {
+        label: 'CDU/CSU',
+        data: [32, 31, 30, 29, 30, 31, 32, 33, 32, 31, 30, 29, 30, 31],
+        borderColor: 'rgb(0, 0, 0)',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      {
+        label: 'SPD',
+        data: [15, 16, 17, 18, 17, 16, 15, 16, 17, 18, 17, 16, 15, 16],
+        borderColor: 'rgb(255, 0, 0)',
+        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+      },
+      {
+        label: 'Greens',
+        data: [12, 11, 10, 11, 12, 13, 12, 11, 10, 11, 12, 13, 12, 11],
+        borderColor: 'rgb(0, 128, 0)',
+        backgroundColor: 'rgba(0, 128, 0, 0.5)',
+      },
+      {
+        label: 'FDP',
+        data: [5, 6, 7, 6, 5, 4, 5, 6, 7, 6, 5, 4, 5, 6],
+        borderColor: 'rgb(255, 255, 0)',
+        backgroundColor: 'rgba(255, 255, 0, 0.5)',
+      },
+      {
+        label: 'AfD',
+        data: [19, 20, 21, 20, 19, 18, 19, 20, 21, 20, 19, 18, 19, 20],
+        borderColor: 'rgb(0, 0, 255)',
+        backgroundColor: 'rgba(0, 0, 255, 0.5)',
+      },
+    ],
+  },
+  'New Zealand': {
+    labels: ['Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024', 'Jul 2024', 'Aug 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025'],
+    datasets: [
+      {
+        label: 'National Party',
+        data: [38, 37, 36, 35, 36, 37, 38, 39, 38, 37, 36, 35, 36, 37],
+        borderColor: 'rgb(0, 0, 255)',
+        backgroundColor: 'rgba(0, 0, 255, 0.5)',
+      },
+      {
+        label: 'Labour Party',
+        data: [26, 27, 28, 29, 28, 27, 26, 25, 26, 27, 28, 29, 28, 27],
+        borderColor: 'rgb(255, 0, 0)',
+        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+      },
+      {
+        label: 'Green Party',
+        data: [13, 12, 11, 12, 13, 14, 13, 12, 11, 12, 13, 14, 13, 12],
+        borderColor: 'rgb(0, 128, 0)',
+        backgroundColor: 'rgba(0, 128, 0, 0.5)',
+      },
+      {
+        label: 'ACT',
+        data: [9, 10, 11, 10, 9, 8, 9, 10, 11, 10, 9, 8, 9, 10],
+        borderColor: 'rgb(255, 255, 0)',
+        backgroundColor: 'rgba(255, 255, 0, 0.5)',
+      },
+    ],
+  },
+  'France': {
+    labels: ['Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024', 'Jul 2024', 'Aug 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025'],
+    datasets: [
+      {
+        label: 'Renaissance',
+        data: [22, 23, 24, 23, 22, 21, 22, 23, 24, 23, 22, 21, 22, 23],
+        borderColor: 'rgb(255, 255, 0)',
+        backgroundColor: 'rgba(255, 255, 0, 0.5)',
+      },
+      {
+        label: 'National Rally',
+        data: [31, 32, 33, 32, 31, 30, 31, 32, 33, 32, 31, 30, 31, 32],
+        borderColor: 'rgb(0, 0, 255)',
+        backgroundColor: 'rgba(0, 0, 255, 0.5)',
+      },
+      {
+        label: 'The Republicans',
+        data: [10, 9, 8, 9, 10, 11, 10, 9, 8, 9, 10, 11, 10, 9],
+        borderColor: 'rgb(255, 0, 0)',
+        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+      },
+      {
+        label: 'France Unbowed',
+        data: [18, 17, 16, 17, 18, 19, 18, 17, 16, 17, 18, 19, 18, 17],
+        borderColor: 'rgb(128, 0, 128)',
+        backgroundColor: 'rgba(128, 0, 128, 0.5)',
       },
     ],
   },

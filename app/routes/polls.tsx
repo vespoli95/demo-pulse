@@ -24,6 +24,30 @@ export default function PollsPage() {
       flagCode: 'IE',
       electionYear: 2025
     },
+    {
+      name: 'Australia',
+      pageTitle: 'Next Australian federal election',
+      flagCode: 'AU',
+      electionYear: 2025
+    },
+    {
+      name: 'Germany',
+      pageTitle: 'Next German federal election',
+      flagCode: 'DE',
+      electionYear: 2025
+    },
+    {
+      name: 'New Zealand',
+      pageTitle: 'Next New Zealand general election',
+      flagCode: 'NZ',
+      electionYear: 2026
+    },
+    {
+      name: 'France',
+      pageTitle: 'Next French legislative election',
+      flagCode: 'FR',
+      electionYear: 2027
+    }
   ];
 
   return (
