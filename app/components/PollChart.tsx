@@ -37,6 +37,7 @@ interface PollChartProps {
 export function PollChart({ title, labels, datasets }: PollChartProps) {
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
@@ -53,5 +54,5 @@ export function PollChart({ title, labels, datasets }: PollChartProps) {
     datasets,
   };
 
-  return <Line options={options} data={data} />;
+  return <div className="w-full h-[500px]"><Line options={options} data={data} /></div>;
 }
