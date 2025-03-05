@@ -1,25 +1,32 @@
-import React from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+// Client-side only imports to prevent SSR issues
+let ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend;
+
+// Only import and register Chart.js on client side
+const isBrowser = typeof window !== 'undefined';
+if (isBrowser) {
+  const chartModule = require('chart.js');
+  ChartJS = chartModule.Chart;
+  CategoryScale = chartModule.CategoryScale;
+  LinearScale = chartModule.LinearScale;
+  PointElement = chartModule.PointElement;
+  LineElement = chartModule.LineElement;
+  Title = chartModule.Title;
+  Tooltip = chartModule.Tooltip;
+  Legend = chartModule.Legend;
+  
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+}
 
 interface PollChartProps {
   title: string;
@@ -40,6 +47,12 @@ export function PollChart({
   datasets,
   wikipediaPage,
 }: PollChartProps) {
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -102,7 +115,13 @@ export function PollChart({
   return (
     <div className="flex flex-col">
       <div className="w-full h-[500px]">
-        <Line options={options} data={data} />
+        {isClient ? (
+          <Line options={options} data={data} />
+        ) : (
+          <div className="flex items-center justify-center h-full">
+            <p>Loading chart...</p>
+          </div>
+        )}
       </div>
       {wikipediaPage && (
         <div className="mt-2 text-right">
