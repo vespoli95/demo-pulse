@@ -21,18 +21,13 @@ export const links: Route.LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
+  // Add AdMob script
+  {
+    rel: "prefetch",
+    href: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-PLACEHOLDER-ID",
+    // In a real implementation, you would use your actual AdMob publisher ID
+  },
 ];
-
-// Add AdMob script to document head
-export function links() {
-  return [
-    {
-      rel: "prefetch",
-      href: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-PLACEHOLDER-ID",
-      // In a real implementation, you would use your actual AdMob publisher ID
-    },
-  ];
-}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
