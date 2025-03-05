@@ -23,6 +23,17 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+// Add AdMob script to document head
+export function links() {
+  return [
+    {
+      rel: "prefetch",
+      href: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-PLACEHOLDER-ID",
+      // In a real implementation, you would use your actual AdMob publisher ID
+    },
+  ];
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -40,6 +51,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
     </html>
   );
 }
+
+import { AdBanner } from "./components/AdBanner";
+import { SidebarAd } from "./components/SidebarAd";
 
 export default function App() {
   return (
@@ -59,7 +73,27 @@ export default function App() {
           </div>
         </div>
       </nav>
-      <Outlet />
+      
+      {/* Top Ad Banner */}
+      <div className="w-full bg-gray-100 dark:bg-gray-800">
+        <div className="container mx-auto py-2">
+          <AdBanner 
+            adSlot="top-banner" 
+            adFormat="horizontal" 
+            style={{ height: '90px', width: '100%' }} 
+          />
+        </div>
+      </div>
+      
+      {/* Main content with sidebar ad */}
+      <div className="container mx-auto px-4 flex flex-col md:flex-row">
+        <div className="flex-grow">
+          <Outlet />
+        </div>
+        <div className="hidden lg:block ml-4 mt-8">
+          <SidebarAd adSlot="sidebar-ad" height="600px" />
+        </div>
+      </div>
     </div>
   );
 }
