@@ -46,10 +46,16 @@ export default function App() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <nav className="bg-white dark:bg-gray-800 shadow-md">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <a href="/" className="text-xl font-bold">Election Polls</a>
+          <a href="/" className="text-xl font-bold">
+            Election Polls
+          </a>
           <div className="flex gap-4">
-            <a href="/" className="hover:underline">Home</a>
-            <a href="/polls" className="hover:underline">Polls</a>
+            <a href="/" className="hover:underline">
+              Home
+            </a>
+            <a href="/polls" className="hover:underline">
+              Polls
+            </a>
           </div>
         </div>
       </nav>
