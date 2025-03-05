@@ -1,30 +1,38 @@
+
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
 
-// We'll register Chart.js components on the client-side only
-const registerChartComponents = () => {
-  if (typeof window !== 'undefined') {
-    ChartJS.register(
-      CategoryScale,
-      LinearScale,
-      PointElement,
-      LineElement,
-      Title,
-      Tooltip,
-      Legend
-    );
+// Import Chart.js components dynamically on client-side only
+let ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend;
+
+// Client-side initialization
+useEffect(() => {
+  async function loadChartModules() {
+    if (typeof window !== 'undefined') {
+      const chart = await import('chart.js');
+      ChartJS = chart.Chart;
+      CategoryScale = chart.CategoryScale;
+      LinearScale = chart.LinearScale;
+      PointElement = chart.PointElement;
+      LineElement = chart.LineElement;
+      Title = chart.Title;
+      Tooltip = chart.Tooltip;
+      Legend = chart.Legend;
+      
+      ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        PointElement,
+        LineElement,
+        Title,
+        Tooltip,
+        Legend
+      );
+    }
   }
-};
+  
+  loadChartModules();
+}, []);
 
 interface PollChartProps {
   title: string;
@@ -48,7 +56,6 @@ export function PollChart({
   const [isClient, setIsClient] = useState(false);
   
   useEffect(() => {
-    registerChartComponents();
     setIsClient(true);
   }, []);
   
@@ -64,7 +71,7 @@ export function PollChart({
         text: title + " (Detailed Data Points with Averages)",
       },
       tooltip: {
-        mode: "index",
+        mode: "index" as const,
         intersect: false,
       },
     },

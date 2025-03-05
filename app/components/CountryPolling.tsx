@@ -39,25 +39,31 @@ export function CountryPolling({
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log(`Loading data for ${country}...`);
         setLoading(true);
+        
         // Fetch Wikipedia page content for description
         const page = await fetchWikipediaContent(pageTitle);
         setContent(page.extract);
+        console.log(`Content loaded for ${country}`);
         
         // For Canada, use our specialized polling data fetcher
         if (country === "Canada") {
+          console.log("Fetching Canadian polling data...");
           const pollingData = await fetchCanadianPollingData();
+          console.log("Canadian polling data received:", pollingData);
           setChartData(pollingData);
         } else {
           // For other countries, we would implement similar functions
           // but for now they're not implemented
+          console.log(`Polling data not implemented for ${country}`);
           setError("Polling data not yet implemented for this country");
         }
         
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching data:", err);
-        setError("Failed to fetch polling data");
+        console.error(`Error fetching data for ${country}:`, err);
+        setError(`Failed to fetch polling data for ${country}`);
         setLoading(false);
       }
     };
