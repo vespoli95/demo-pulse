@@ -1,9 +1,6 @@
-
 import React from "react";
-
-// Define the logos as placeholders
-const logoLight = "/logo-light.svg";
-const logoDark = "/logo-dark.svg";
+import logoDark from "./logo-dark.svg";
+import logoLight from "./logo-light.svg";
 
 // Define the resources for the welcome page
 const resources = [
@@ -27,7 +24,7 @@ const resources = [
 export function Welcome() {
   // Use React.useEffect for any client-side only code
   const [isClient, setIsClient] = React.useState(false);
-  
+
   React.useEffect(() => {
     setIsClient(true);
   }, []);
