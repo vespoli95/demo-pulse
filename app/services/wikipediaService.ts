@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// Define the types for our parsed polling data
-export interface ParsedPollData {
+// Define the types for chart data structure
+export interface ChartData {
   labels: string[];
   datasets: Array<{
     label: string;
@@ -58,7 +58,7 @@ const partyColors: Record<
   },
 };
 
-export const fetchCanadianPollingData = async (): Promise<ParsedPollData> => {
+export const fetchCanadianPollingData = async (): Promise<ChartData> => {
   try {
     console.log("Fetching Canadian polling data...");
     // This would typically fetch from an actual API, but for demonstration purposes,
@@ -107,6 +107,36 @@ export const fetchCanadianPollingData = async (): Promise<ParsedPollData> => {
   }
 };
 
+// Helper function to convert chart data to poll data points
+export const convertToDataPoints = (chartData: ChartData): PollDataPoint[] => {
+  if (!chartData.labels || !chartData.datasets) return [];
+  
+  return chartData.labels.map((date, index) => {
+    const dataPoint: PollDataPoint = { date };
+    
+    chartData.datasets.forEach(dataset => {
+      const label = dataset.label.toLowerCase();
+      if (label.includes('liberal')) {
+        dataPoint.liberal = dataset.data[index];
+      } else if (label.includes('conservative')) {
+        dataPoint.conservative = dataset.data[index];
+      } else if (label.includes('ndp')) {
+        dataPoint.ndp = dataset.data[index];
+      } else if (label.includes('bloc') || label.includes('québécois')) {
+        dataPoint.bloc = dataset.data[index];
+      } else if (label.includes('green')) {
+        dataPoint.green = dataset.data[index];
+      } else if (label.includes('peoples')) {
+        dataPoint.peoples = dataset.data[index];
+      } else {
+        dataPoint.other = (dataPoint.other || 0) + dataset.data[index];
+      }
+    });
+    
+    return dataPoint;
+  });
+};
+
 // In a real implementation, this would parse table data from Wikipedia
 export const parsePollingData = (content: string) => {
   console.log("Parsing polling data from Wikipedia content");
@@ -125,7 +155,13 @@ export const parsePollingData = (content: string) => {
 
 export interface PollDataPoint {
   date: string;
-  values: { [party: string]: number };
+  liberal?: number;
+  conservative?: number;
+  ndp?: number;
+  bloc?: number;
+  green?: number;
+  peoples?: number;
+  other?: number;
 }
 
 interface WikipediaResponse {
@@ -140,17 +176,6 @@ interface WikipediaResponse {
       };
     };
   };
-}
-// Define the type for parsed poll data
-export interface ParsedPollData {
-  date: string;
-  liberal?: number;
-  conservative?: number;
-  ndp?: number;
-  bloc?: number;
-  green?: number;
-  peoples?: number;
-  other?: number;
 }
 
  

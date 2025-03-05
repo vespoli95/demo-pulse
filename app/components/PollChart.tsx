@@ -1,9 +1,9 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
-import type { ParsedPollData } from "../services/wikipediaService";
+import type { PollDataPoint } from "../services/wikipediaService";
 
 // Create a proper React component
-export function PollChart({ data }: { data?: ParsedPollData[] }) {
+export function PollChart({ data }: { data?: PollDataPoint[] }) {
   const [chartLoaded, setChartLoaded] = React.useState(false);
 
   React.useEffect(() => {
