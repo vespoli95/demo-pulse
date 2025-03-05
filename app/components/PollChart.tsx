@@ -1,163 +1,76 @@
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Line } from "react-chartjs-2";
+import type { ParsedPollData } from "../services/wikipediaService";
 
-// Import Chart.js components dynamically on client-side only
-let ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend;
+// Create a proper React component
+export function PollChart({ data }: { data?: ParsedPollData[] }) {
+  const [chartLoaded, setChartLoaded] = React.useState(false);
 
-// Client-side initialization
-useEffect(() => {
-  async function loadChartModules() {
-    if (typeof window !== 'undefined') {
-      const chart = await import('chart.js');
-      ChartJS = chart.Chart;
-      CategoryScale = chart.CategoryScale;
-      LinearScale = chart.LinearScale;
-      PointElement = chart.PointElement;
-      LineElement = chart.LineElement;
-      Title = chart.Title;
-      Tooltip = chart.Tooltip;
-      Legend = chart.Legend;
-      
-      ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        LineElement,
-        Title,
-        Tooltip,
-        Legend
-      );
+  React.useEffect(() => {
+    async function loadChartModules() {
+      if (typeof window !== 'undefined') {
+        const chart = await import('chart.js');
+        const ChartJS = chart.Chart;
+        const CategoryScale = chart.CategoryScale;
+        const LinearScale = chart.LinearScale;
+        const PointElement = chart.PointElement;
+        const LineElement = chart.LineElement;
+        const Title = chart.Title;
+        const Tooltip = chart.Tooltip;
+        const Legend = chart.Legend;
+
+        ChartJS.register(
+          CategoryScale,
+          LinearScale,
+          PointElement,
+          LineElement,
+          Title,
+          Tooltip,
+          Legend
+        );
+
+        setChartLoaded(true);
+      }
     }
-  }
-  
-  loadChartModules();
-}, []);
 
-interface PollChartProps {
-  title: string;
-  labels: string[];
-  datasets: Array<{
-    label: string;
-    data: number[];
-    borderColor: string;
-    backgroundColor: string;
-  }>;
-  countryCode?: string;
-  wikipediaPage?: string;
-}
-
-export function PollChart({
-  title,
-  labels,
-  datasets,
-  wikipediaPage,
-}: PollChartProps) {
-  const [isClient, setIsClient] = useState(false);
-  
-  useEffect(() => {
-    setIsClient(true);
+    loadChartModules();
   }, []);
-  
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: "top" as const,
-      },
-      title: {
-        display: true,
-        text: title + " (Detailed Data Points with Averages)",
-      },
-      tooltip: {
-        mode: "index" as const,
-        intersect: false,
-      },
-    },
-    elements: {
-      point: {
-        radius: 1,
-        hoverRadius: 5,
-      },
-      line: {
-        tension: 0.3, // Add slight curve to lines
-      },
-    },
-    scales: {
-      x: {
-        ticks: {
-          maxRotation: 45,
-          minRotation: 45,
-          autoSkip: true,
-          maxTicksLimit: 20,
-        },
-      },
-      y: {
-        beginAtZero: false,
-        min: function (context: any) {
-          let min =
-            Math.min(
-              ...context.chart.data.datasets.flatMap((d: any) => d.data)
-            ) - 5;
-          return Math.max(0, min); // Don't go below 0
-        },
-        max: function (context: any) {
-          let max =
-            Math.max(
-              ...context.chart.data.datasets.flatMap((d: any) => d.data)
-            ) + 5;
-          return Math.min(100, max); // Don't go above 100
-        },
-      },
-    },
-  };
 
-  const data = {
-    labels,
-    datasets,
+  if (!data || !chartLoaded) {
+    return <div className="text-center my-8">Preparing chart data...</div>;
+  }
+
+  // Sample data structure for the chart
+  const chartData = {
+    labels: data.map(poll => poll.date),
+    datasets: [
+      {
+        label: 'Liberal',
+        data: data.map(poll => poll.liberal || 0),
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: 'Conservative',
+        data: data.map(poll => poll.conservative || 0),
+        borderColor: 'rgb(54, 162, 235)',
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+      },
+      {
+        label: 'NDP',
+        data: data.map(poll => poll.ndp || 0),
+        borderColor: 'rgb(255, 159, 64)',
+        backgroundColor: 'rgba(255, 159, 64, 0.5)',
+      },
+      // Add other parties as needed
+    ],
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="w-full h-[500px]">
-        {isClient ? (
-          <Line options={options} data={data} />
-        ) : (
-          <div className="flex items-center justify-center h-full">
-            <p>Loading chart...</p>
-          </div>
-        )}
+    <div className="w-full max-w-4xl mx-auto p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+      <div className="h-80">
+        {chartLoaded && <Line data={chartData} options={{ responsive: true, maintainAspectRatio: false }} />}
       </div>
-      {wikipediaPage && (
-        <div className="mt-2 text-right">
-          <a
-            href={`https://en.wikipedia.org/wiki/${wikipediaPage.replace(
-              / /g,
-              "_"
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 text-sm hover:underline flex items-center justify-end"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 mr-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-              />
-            </svg>
-            View data on Wikipedia
-          </a>
-        </div>
-      )}
     </div>
   );
 }

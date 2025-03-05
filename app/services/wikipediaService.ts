@@ -141,3 +141,48 @@ interface WikipediaResponse {
     };
   };
 }
+// Define the type for parsed poll data
+export interface ParsedPollData {
+  date: string;
+  liberal?: number;
+  conservative?: number;
+  ndp?: number;
+  bloc?: number;
+  green?: number;
+  peoples?: number;
+  other?: number;
+}
+
+// Function to fetch Wikipedia content
+export async function fetchWikipediaContent(pageTitle: string) {
+  const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(pageTitle)}`;
+  
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Wikipedia API error: ${response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching Wikipedia content:", error);
+    throw error;
+  }
+}
+
+// Function to fetch Canadian polling data
+export async function fetchCanadianPollingData(): Promise<ParsedPollData[]> {
+  // This would normally fetch from a real API or parse Wikipedia
+  // For now, return mock data
+  return [
+    { date: "Jan 2023", liberal: 30, conservative: 35, ndp: 20 },
+    { date: "Feb 2023", liberal: 32, conservative: 34, ndp: 19 },
+    { date: "Mar 2023", liberal: 33, conservative: 33, ndp: 21 },
+    { date: "Apr 2023", liberal: 31, conservative: 35, ndp: 20 },
+    { date: "May 2023", liberal: 29, conservative: 36, ndp: 22 },
+    { date: "Jun 2023", liberal: 28, conservative: 38, ndp: 21 },
+    { date: "Jul 2023", liberal: 27, conservative: 39, ndp: 19 },
+    { date: "Aug 2023", liberal: 28, conservative: 40, ndp: 18 },
+    { date: "Sep 2023", liberal: 29, conservative: 38, ndp: 20 },
+    { date: "Oct 2023", liberal: 30, conservative: 37, ndp: 21 },
+  ];
+}
