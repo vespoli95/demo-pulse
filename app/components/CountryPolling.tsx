@@ -37,6 +37,9 @@ export function CountryPolling({
   const [chartData, setChartData] = useState<ParsedPollData | null>(null);
 
   useEffect(() => {
+    // Only run on client-side to prevent SSR hydration issues
+    if (typeof window === 'undefined') return;
+    
     const fetchData = async () => {
       try {
         console.log(`Loading data for ${country}...`);
@@ -52,6 +55,8 @@ export function CountryPolling({
           console.log("Fetching Canadian polling data...");
           const pollingData = await fetchCanadianPollingData();
           console.log("Canadian polling data received:", pollingData);
+          // Convert chart data to poll data points
+          const dataPoints = convertToDataPoints(pollingData);
           setChartData(pollingData);
         } else {
           // For other countries, we would implement similar functions

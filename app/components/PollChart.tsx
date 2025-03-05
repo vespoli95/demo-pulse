@@ -6,9 +6,15 @@ import type { PollDataPoint } from "../services/wikipediaService";
 export function PollChart({ data }: { data?: PollDataPoint[] }) {
   const [chartLoaded, setChartLoaded] = React.useState(false);
 
+  // This condition prevents the hook from running during server rendering
+  const isBrowser = typeof window !== 'undefined';
+  
   React.useEffect(() => {
+    // Only run in browser environment
+    if (!isBrowser) return;
+    
     async function loadChartModules() {
-      if (typeof window !== 'undefined') {
+      try {
         const chart = await import('chart.js');
         const ChartJS = chart.Chart;
         const CategoryScale = chart.CategoryScale;
@@ -30,11 +36,13 @@ export function PollChart({ data }: { data?: PollDataPoint[] }) {
         );
 
         setChartLoaded(true);
+      } catch (error) {
+        console.error("Failed to load Chart.js modules:", error);
       }
     }
 
     loadChartModules();
-  }, []);
+  }, [isBrowser]); // Add isBrowser to dependencies array
 
   if (!data || !chartLoaded) {
     return <div className="text-center my-8">Preparing chart data...</div>;
