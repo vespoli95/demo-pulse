@@ -35,9 +35,6 @@ export function AdBanner({ adSlot, adFormat = "auto", style }: AdBannerProps) {
   }, [adSlot, adFormat]);
 
   return (
-    <div id={`ad-container-${adSlot}`} className="ad-container" style={style}>
-      {" "}
-      test tes test{" "}
-    </div>
+    <div id={`ad-container-${adSlot}`} className="ad-container" style={style}></div>
   );
 }

@@ -1,15 +1,15 @@
-
 import React, { useState, useEffect } from "react";
 import { Chart } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
-import { 
+import {
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  ChartOptions,
 } from "chart.js";
 import { ChartData } from "../services/wikipediaService";
 
@@ -33,51 +33,47 @@ interface PollChartProps {
     borderColor: string;
     backgroundColor: string;
   }>;
-  countryCode: string;
+  countryCode?: string;
 }
 
-export function PollChart({ title, labels, datasets, countryCode }: PollChartProps) {
-  const [mounted, setMounted] = useState(false);
-  
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <div className="text-center my-8">Preparing chart data...</div>;
+export function PollChart({
+  title,
+  labels,
+  datasets,
+  countryCode,
+}: PollChartProps) {
+  // Early return for SSR or if data is not ready
+  if (typeof window === 'undefined' || !labels || !datasets) {
+    return <div className="h-[400px] w-full flex items-center justify-center">Loading chart data...</div>;
   }
 
-  const chartData: ChartData = {
-    labels,
-    datasets
-  };
-
-  const options = {
+  const options: ChartOptions<"line"> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: "top" as const,
       },
       title: {
-        display: true,
-        text: title,
+        display: false,
       },
     },
     scales: {
       y: {
+        beginAtZero: false,
         min: 0,
         max: 50,
-        ticks: {
-          callback: (value: number) => `${value}%`
-        }
-      }
-    }
+        title: {
+          display: true,
+          text: "Support (%)",
+        },
+      },
+    },
   };
 
   return (
     <div className="h-[400px] w-full">
-      <Line data={chartData} options={options} />
+      <Line options={options} data={{ labels, datasets }} />
     </div>
   );
 }
