@@ -37,7 +37,8 @@ export function CountryPolling({
   const [chartData, setChartData] = useState<ChartData | null>(null);
 
   useEffect(() => {
-    let isMounted = true;
+    // Only run on client-side to prevent SSR hydration issues
+    if (typeof window === 'undefined') return;
     
     const fetchData = async () => {
       try {
@@ -46,49 +47,31 @@ export function CountryPolling({
         
         // Fetch Wikipedia page content for description
         const page = await fetchWikipediaContent(pageTitle);
-        if (isMounted) {
-          setContent(page.extract);
-          console.log(`Content loaded for ${country}`);
-        }
+        setContent(page.extract);
+        console.log(`Content loaded for ${country}`);
         
         // For Canada, use our specialized polling data fetcher
         if (country === "Canada") {
           console.log("Fetching Canadian polling data...");
           const pollingData = await fetchCanadianPollingData();
           console.log("Canadian polling data received:", pollingData);
-          if (isMounted) {
-            setChartData(pollingData);
-            setLoading(false);
-          }
+          setChartData(pollingData);
         } else {
           // For other countries, we would implement similar functions
           // but for now they're not implemented
           console.log(`Polling data not implemented for ${country}`);
-          if (isMounted) {
-            setError("Polling data not yet implemented for this country");
-            setLoading(false);
-          }
+          setError("Polling data not yet implemented for this country");
         }
+        
+        setLoading(false);
       } catch (err) {
         console.error(`Error fetching data for ${country}:`, err);
-        if (isMounted) {
-          setError(`Failed to fetch polling data for ${country}`);
-          setLoading(false);
-        }
+        setError(`Failed to fetch polling data for ${country}`);
+        setLoading(false);
       }
     };
 
-    // Execute fetch on client-side only
-    if (typeof window !== 'undefined') {
-      fetchData();
-    } else {
-      // For SSR, set a default state without loading
-      setLoading(false);
-    }
-    
-    return () => {
-      isMounted = false;
-    };
+    fetchData();
   }, [country, pageTitle]);
 
   if (loading) {

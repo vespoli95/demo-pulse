@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
+
+import React, { useEffect } from 'react';
 
 interface AdBannerProps {
   adSlot: string;
-  adFormat?: "auto" | "rectangle" | "horizontal" | "vertical";
+  adFormat?: 'auto' | 'rectangle' | 'horizontal' | 'vertical';
   style?: React.CSSProperties;
 }
 
-export function AdBanner({ adSlot, adFormat = "auto", style }: AdBannerProps) {
+export function AdBanner({ adSlot, adFormat = 'auto', style }: AdBannerProps) {
   useEffect(() => {
     // This would be replaced with actual AdMob initialization in production
     console.log(`Ad banner loaded: ${adSlot}`);
-
+    
     // Simulate ad loading
     const adContainer = document.getElementById(`ad-container-${adSlot}`);
     if (adContainer) {
@@ -29,12 +30,16 @@ export function AdBanner({ adSlot, adFormat = "auto", style }: AdBannerProps) {
       // Cleanup if needed
       const adContainer = document.getElementById(`ad-container-${adSlot}`);
       if (adContainer) {
-        adContainer.innerHTML = "";
+        adContainer.innerHTML = '';
       }
     };
   }, [adSlot, adFormat]);
 
   return (
-    <div id={`ad-container-${adSlot}`} className="ad-container" style={style}></div>
+    <div 
+      id={`ad-container-${adSlot}`} 
+      className="ad-container"
+      style={style}
+    ></div>
   );
 }

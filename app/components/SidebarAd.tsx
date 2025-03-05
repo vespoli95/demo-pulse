@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
+
+import React, { useEffect } from 'react';
 
 interface SidebarAdProps {
   adSlot: string;
   height?: string;
 }
 
-export function SidebarAd({ adSlot, height = "600px" }: SidebarAdProps) {
+export function SidebarAd({ adSlot, height = '600px' }: SidebarAdProps) {
   useEffect(() => {
     // This would be replaced with actual AdMob initialization in production
     console.log(`Sidebar ad loaded: ${adSlot}`);
-
+    
     // Simulate ad loading
     const adContainer = document.getElementById(`ad-sidebar-${adSlot}`);
     if (adContainer) {
@@ -28,23 +29,21 @@ export function SidebarAd({ adSlot, height = "600px" }: SidebarAdProps) {
       // Cleanup if needed
       const adContainer = document.getElementById(`ad-sidebar-${adSlot}`);
       if (adContainer) {
-        adContainer.innerHTML = "";
+        adContainer.innerHTML = '';
       }
     };
   }, [adSlot]);
 
   return (
-    <div
-      id={`ad-sidebar-${adSlot}`}
+    <div 
+      id={`ad-sidebar-${adSlot}`} 
       className="sidebar-ad"
-      style={{
-        width: "300px",
-        height,
-        position: "sticky",
-        top: "20px",
+      style={{ 
+        width: '300px', 
+        height, 
+        position: 'sticky',
+        top: '20px'
       }}
-    >
-      testestestestest
-    </div>
+    ></div>
   );
 }
