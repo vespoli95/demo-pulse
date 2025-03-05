@@ -34,7 +34,7 @@ export function CountryPolling({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [content, setContent] = useState<string | null>(null);
-  const [chartData, setChartData] = useState<ParsedPollData | null>(null);
+  const [chartData, setChartData] = useState<ChartData | null>(null);
 
   useEffect(() => {
     // Only run on client-side to prevent SSR hydration issues
