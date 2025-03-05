@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { fetchWikipediaContent, fetchCanadianPollingData, ParsedPollData } from "../services/wikipediaService";
+import { fetchWikipediaContent, fetchCanadianPollingData, ChartData, convertToDataPoints } from "../services/wikipediaService";
 import { PollChart } from "./PollChart";
 
 // Function to get country codes for flag API
@@ -55,8 +55,6 @@ export function CountryPolling({
           console.log("Fetching Canadian polling data...");
           const pollingData = await fetchCanadianPollingData();
           console.log("Canadian polling data received:", pollingData);
-          // Convert chart data to poll data points
-          const dataPoints = convertToDataPoints(pollingData);
           setChartData(pollingData);
         } else {
           // For other countries, we would implement similar functions
