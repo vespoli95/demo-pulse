@@ -1,32 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-// Client-side only imports to prevent SSR issues
-let ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend;
-
-// Only import and register Chart.js on client side
-const isBrowser = typeof window !== 'undefined';
-if (isBrowser) {
-  const chartModule = require('chart.js');
-  ChartJS = chartModule.Chart;
-  CategoryScale = chartModule.CategoryScale;
-  LinearScale = chartModule.LinearScale;
-  PointElement = chartModule.PointElement;
-  LineElement = chartModule.LineElement;
-  Title = chartModule.Title;
-  Tooltip = chartModule.Tooltip;
-  Legend = chartModule.Legend;
-  
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-}
+// We'll register Chart.js components on the client-side only
+const registerChartComponents = () => {
+  if (typeof window !== 'undefined') {
+    ChartJS.register(
+      CategoryScale,
+      LinearScale,
+      PointElement,
+      LineElement,
+      Title,
+      Tooltip,
+      Legend
+    );
+  }
+};
 
 interface PollChartProps {
   title: string;
@@ -50,6 +48,7 @@ export function PollChart({
   const [isClient, setIsClient] = useState(false);
   
   useEffect(() => {
+    registerChartComponents();
     setIsClient(true);
   }, []);
   
